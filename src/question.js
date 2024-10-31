@@ -4,18 +4,18 @@ class Question {
   // 1. constructor (text, choices, answer, difficulty)
   constructor(text, choices, answer, difficulty) {
     this.text = text;
-    this.choices = this.shuffleChoices(choices);
+    this.choices = choices;
     this.answer = answer;
     this.difficulty = difficulty;
   }
   // 2. shuffleChoices()
-  shuffleChoices(choices){
-    let shuffled = choices
+  shuffleChoices(s){
+    let shuffled = this.choices
     .map(value => ({ value, sort: Math.random() }))
     .sort((a, b) => a.sort - b.sort)
     .map(({ value }) => value);
-   
-    console.log(choices);
-    return choices;
+
+    console.log(shuffled);
+    this.choices = shuffled;
   }
 }
