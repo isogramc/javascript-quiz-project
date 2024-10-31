@@ -16,5 +16,6 @@ class Question {
     .map(({ value }) => value);
    
     console.log(choices);
+    return choices;
   }
 }
