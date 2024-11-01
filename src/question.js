@@ -9,13 +9,18 @@ class Question {
     this.difficulty = difficulty;
   }
   // 2. shuffleChoices()
-  shuffleChoices(s){
+  shuffleChoices(s) {
     let shuffled = this.choices
-    .map(value => ({ value, sort: Math.random() }))
-    .sort((a, b) => a.sort - b.sort)
-    .map(({ value }) => value);
+      .map((value) => ({ value, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({ value }) => value);
 
     console.log(shuffled);
     this.choices = shuffled;
   }
+  // 2. shuffleChoices()
+//   shuffleChoices() {
+//     let shuffled = this.choices.sort(() => 0.5 - Math.random);
+//     return shuffled;
+//   }
 }
