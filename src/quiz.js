@@ -22,14 +22,15 @@ class Quiz {
     this.questions.sort(() => 0.5 - Math.random());
   }
   // 5. checkAnswer(answer)
-  checkAnswer(response) {
-    if (response === this.questions[currentQuestionIndex].answer)
+  checkAnswer(answer) {
+    if (answer === this.questions[this.currentQuestionIndex].answer)
       this.correctAnswers += 1;
   }
   // 6. hasEnded()
   hasEnded() {
     return this.currentQuestionIndex < this.questions.length ? false : true;
   }
+
   // Day 2
   filterQuestionsByDifficulty(difficulty) {
     if (difficulty >= 1 && difficulty <= 3) {
