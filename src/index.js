@@ -50,7 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
 
   // Display the time remaining in the time remaining container
-//  const timeRemainingContainer = document.getElementById("timeRemaining");
 
 
   // Show first question
@@ -58,12 +57,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /************  TIMER  ************/
 
-  var time = 60 / 2, // your time in seconds here
-      timeRemainingContainer = document.getElementById("timeRemaining");
+  let time = quizDuration; // your time in seconds here
+  const timeRemainingContainer = document.getElementById("timeRemaining");
   startTimer(time, timeRemainingContainer);
 
   function startTimer(duration, display) {
-    var timer = duration, minutes, seconds;
+    let timer = duration, minutes, seconds;
     setInterval(function () {
       minutes = parseInt(timer / 60, 10)
       seconds = parseInt(timer % 60, 10);
@@ -76,9 +75,14 @@ document.addEventListener("DOMContentLoaded", () => {
       if (--timer < 0) {
         timer = 0;
         showResults();
+        myStopFunction();
         // timer = duration; // uncomment this line to reset timer automatically after reaching 0
       }
     }, 1000);
+  }
+
+  function myStopFunction() {
+    clearInterval(myInterval);
   }
   /************  EVENT LISTENERS  ************/
 
@@ -176,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
   function nextButtonHandler () {
     let selectedAnswer; // A variable to store the selected answer value
-
+    const message = document.createElement("div");
     // YOUR CODE HERE:
     //
     // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
@@ -188,8 +192,12 @@ document.addEventListener("DOMContentLoaded", () => {
       //  You can use check which choice was selected by checking if the `.checked` property is true.
     for(let i=0; i<choiceElements.length; i++){
       if(choiceElements[i].checked === true){
-        console.log(choiceElements[i].value);
+        //console.log(choiceElements[i].value);
         selectedAnswer = choiceElements[i].value;
+      } else {
+        message.innerHTML ="* Please select an answer";
+        message.style.color = "red";
+        document.getElementById("quizView").prepend(message);
       }
     }
       
