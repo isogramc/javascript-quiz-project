@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const questionContainer = document.querySelector("#question");
   const choiceContainer = document.querySelector("#choices");
   const nextButton = document.querySelector("#nextButton");
+  const reloadButton = document.querySelector("#restartButton");
 
   // End view elements
   const resultContainer = document.querySelector("#result");
@@ -87,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
   /************  EVENT LISTENERS  ************/
 
   document.querySelector("#nextButton").addEventListener("click", nextButtonHandler);
-
+  document.querySelector("#restartButton").addEventListener("click", reloadButtonHandler);
 
 
   /************  FUNCTIONS  ************/
@@ -128,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
     let progressBar = document.querySelector("#progressBar");
     let progressPercentage = 0;
-    progressPercentage += ((quiz.currentQuestionIndex+1) * (100/quiz.questions.length));
+    progressPercentage += ((quiz.currentQuestionIndex) * (100/quiz.questions.length));
     progressBar.style.width = `${progressPercentage}%`;
 
     // 3. Update the question count text 
@@ -177,15 +178,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  function reloadButtonHandler () {
+    window.location.reload();
+  }
+
   
   function nextButtonHandler () {
     let selectedAnswer; // A variable to store the selected answer value
-    const message = document.createElement("div");
     // YOUR CODE HERE:
     //
     // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
     let choiceElements = document.getElementsByName("answer");
-
+    let message = document.getElementById("message");
+    message.style.display = "none";
+    message.innerHTML ="* Please select an answer";
+    message.style.color = "red";
     // 2. Loop through all the choice elements and check which one is selected
       // Hint: Radio input elements have a property `.checked` (e.g., `element.checked`).
       //  When a radio input gets selected the `.checked` property will be set to true.
@@ -194,10 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if(choiceElements[i].checked === true){
         //console.log(choiceElements[i].value);
         selectedAnswer = choiceElements[i].value;
-      } else {
-        message.innerHTML ="* Please select an answer";
-        message.style.color = "red";
-        document.getElementById("quizView").prepend(message);
+        break;
       }
     }
       
@@ -205,11 +209,14 @@ document.addEventListener("DOMContentLoaded", () => {
       // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
       // Move to the next question by calling the quiz method `moveToNextQuestion()`.
       // Show the next question by calling the function `showQuestion()`.
-
-    quiz.checkAnswer(selectedAnswer);
-    quiz.moveToNextQuestion();
-    showQuestion();
-  }  
+    if (selectedAnswer !== "" && selectedAnswer !== undefined) {
+      quiz.checkAnswer(selectedAnswer);
+      quiz.moveToNextQuestion();
+      showQuestion();
+    } else {
+      message.style.display = "block";
+    }
+  }
 
 
 
